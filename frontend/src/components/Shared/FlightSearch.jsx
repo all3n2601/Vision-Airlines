@@ -51,18 +51,6 @@ function FlightSearch() {
   };
 return (
     <div className=" bg-[#f9f9f9] text-black min-h-screen">
-      <header className="flex justify-between items-center p-5 bg-[#070e17] text-white" >
-        <div className="flex items-center">
-          <img src={logo} alt="Logo" className="h-24 mr-12" />
-          <nav className="flex">
-            <a href="#plantrip" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Plan Trip</a>
-            <a href="#travelinfo" className="mr-4 hover:underline"style={{fontFamily:'Anta'}}>Travel Info</a>
-            <a href="#boardingpass" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Boarding Pass</a>
-            <a href="#visainquiry" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Visa Enquiry</a>
-          </nav>
-        </div>
-        <a href="#login" className="hover:underline" style={{fontFamily:'Anta'}}>Login/Sign In</a>
-      </header>
       <div className="flex justify-end">
         <button onClick={() => handleSort('departureDate')} className="btn">Sort by Date</button>
       </div>
