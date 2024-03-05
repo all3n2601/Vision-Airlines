@@ -5,6 +5,10 @@ import HomePage from './pages/Shared/HomePage'
 import SignInPage from './pages/Auth/Signinpage';
 import SignUpPage from './pages/Auth/Signuppage';
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordpage';
+import BookTicketPage from './pages/Shared/HomePage';
+import ExploreFlightsPage from './pages/Shared/HomePage';
+
+
 
 function App() {
 
