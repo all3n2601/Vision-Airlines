@@ -16,10 +16,6 @@ function Footer() {
             <li>Online Boarding Pass</li>
           </ul>
         </div>
-        <div
-          className="md:block bg-white-400 mx-auto"
-          style={{ height: "70%", width: "2px" }}
-        ></div>
 
         <div className="w-full md:w-1/4 p-4">
           <h3 className="font-bold text-2xl mb-4">Top Destinations</h3>
@@ -31,10 +27,6 @@ function Footer() {
             <li>San Francisco</li>
           </ul>
         </div>
-        <div
-          className="md:block bg-white-400 mx-auto"
-          style={{ height: "70%", width: "2px" }}
-        ></div>
 
         <div className="w-full md:w-1/4 p-4">
           <h3 className="font-bold text-2xl mb-4">Top Countries</h3>
@@ -45,10 +37,6 @@ function Footer() {
             <li>New Zealand</li>
           </ul>
         </div>
-        <div
-          className="md:block bg-white-400 mx-auto"
-          style={{ height: "70%", width: "2px" }}
-        ></div>
 
         <div className="w-full md:w-1/4 p-4">
           <h3 className="font-bold text-2xl mb-4">Popular Flights</h3>

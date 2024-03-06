@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import Card from "./city_card.jsx";
 
-import bck from "../../assets/flight.jpg";
+import bck from "../../assets/flight.png";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
-import c1 from "../../assets/c (1).jpeg";
-import c2 from "../../assets/c (2).jpeg";
-import c3 from "../../assets/c (3).jpeg";
-import c4 from "../../assets/c (4).jpeg";
-import c5 from "../../assets/c (5).jpeg";
-import c6 from "../../assets/c (6).jpeg";
+import c1 from "../../assets/Lonodn.jpg";
+import c2 from "../../assets/Melborne.jpg";
+import c3 from "../../assets/PAris.avif";
+import c4 from "../../assets/Rome.jpg";
+import c5 from "../../assets/singapore.jpg";
+import c6 from "../../assets/sydney.jpg";
+import c7 from "../../assets/bali.avif";
+import c8 from "../../assets/brisbane.avif";
 import leftArrow from "../../assets/left.png";
 import rightArrow from "../../assets/right.png";
 import ReactDatePicker from "react-datepicker";
@@ -48,6 +51,18 @@ function Home() {
       passengers: prevParams.passengers > 1 ? prevParams.passengers - 1 : 1,
     }));
   };
+
+  const cardData = [
+    { cityName: "London", country: "UK", price: "23,999", imageSrc: c1 },
+    { cityName: "Melbourne", country: "Australia", price: "24,599", imageSrc: c2 },
+    { cityName: "Paris", country: "France", price: "31,299", imageSrc: c3 },
+    { cityName: "Rome", country: "Italy", price: "29,999", imageSrc: c4 },
+    { cityName: "Singapore", country: "Singapore", price: "17,999", imageSrc: c5 },
+    { cityName: "Sydney", country: "Australia", price: "18,000", imageSrc: c6 },
+    { cityName: "Bali", country: "Indonesia", price: "14,499", imageSrc: c7 },
+    { cityName: "Brisbane", country: "USA", price: "51,999", imageSrc: c8 },
+  ];
+  const [showExtendedContent, setShowExtendedContent] = useState(false);
   const handleDateChange = (date) => {
     setSearchParams({ ...searchParams, departureDate: date });
   };
@@ -79,42 +94,39 @@ function Home() {
           <img
             src={bck}
             alt="Background"
-            className="w-full h-[90vh] object-cover"
+            className="w-full h-[80vh] object-cover"
           />
-          <div className="absolute top-[90%] left-20% w-full max-w-[80%] p-5 bg-[#fdfdfd67] text-[#0d0d0d] rounded-lg transform translate-x-[13%] -translate-y-[50%]">
-            <h2
-              className="text-center text-2xl font-bold mb-5"
-              style={{ fontFamily: "Anta" }}
-            >
-              Hi, where would you like to go?
-            </h2>
-            <div className="h-1 bg-[#070e17] my-10 mx-14"></div>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col items-center justify-center space-y-5"
-            >
-              <div className="flex justify-between w-full">
-                <input
-                  type="text"
-                  id="departure"
-                  name="departure"
-                  value={searchParams.departure}
-                  onChange={handleInputChange}
-                  placeholder="Departure"
-                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17] "
-                  style={{ fontFamily: "Anta" }}
-                ></input>
-                <input
-                  type="text"
-                  id="destination"
-                  name="destination"
-                  value={searchParams.destination}
-                  onChange={handleInputChange}
-                  placeholder="Destination"
-                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17] "
-                  style={{ fontFamily: "Anta" }}
-                />
-              </div>
+          <div className="absolute top-[50%] left-20% w-full max-w-[80%] p-5 bg-[#fdfdfd67] text-[#0d0d0d] rounded-lg transform translate-x-[13%] -translate-y-[50%]">
+      <h2 className="text-center text-2xl font-bold mb-5" style={{ fontFamily: 'Anta' }}>Hi, where would you like to go?</h2>
+      <div className="h-1 bg-[#070e17] my-10 mx-14"></div>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center space-y-5">
+        <div className="flex justify-between w-full">
+          <input
+            type="text"
+            id="departure"
+            name="departure"
+            value={searchParams.departure}
+            onChange={handleInputChange}
+            onFocus={() => setShowExtendedContent(true)} // Show extended content when input is focused
+            placeholder="Departure"
+            className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17]"
+            style={{ fontFamily: 'Anta' }}
+          />
+          <input
+            type="text"
+            id="destination"
+            name="destination"
+            value={searchParams.destination}
+            onChange={handleInputChange}
+            onFocus={() => setShowExtendedContent(true)} // Show extended content when input is focused
+            placeholder="Destination"
+            className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17]"
+            style={{ fontFamily: 'Anta' }}
+          />
+        </div>
+        {showExtendedContent && (
+          <>
+
               <div className="flex justify-between w-full">
                 <div className="flex-1 mx-2" style={{ fontFamily: "Anta" }}>
                   <ReactDatePicker
@@ -231,6 +243,7 @@ function Home() {
                   </div>
                 </div>
               </div>
+            
               <button
                 type="submit"
                 className="w-full p-4 border-2 bg-[#f7f7f7] text-[#000000] font-bold rounded-md hover:bg-[#cad9edb4]"
@@ -238,56 +251,27 @@ function Home() {
               >
                 Search Flights
               </button>
+              </>
+        )}
             </form>
           </div>
         </div>
       </main>
 
-      <div className="ml-16 lg:ml-15 pt-20">
+      <div className="ml-16 lg:ml-15 ">
         <h2
           className="text-black text-lg lg:text-xl font-bold tracking-wide mb-8 ml-1"
-          style={{ fontFamily: "Anta", paddingTop: "4rem", paddingLeft: "0px" }}
+          style={{ fontFamily: "Anta", paddingLeft: "0px" }}
         >
           Trending From Chennai
         </h2>
-        <div className="grid grid-cols-3 gap-5">
-          <img
-            src={c1}
-            alt="Destination 1"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2x2 border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-          <img
-            src={c2}
-            alt="Destination 2"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2xl border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-          <img
-            src={c3}
-            alt="Destination 3"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2xl border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-          <img
-            src={c4}
-            alt="Destination 4"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2xl border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-          <img
-            src={c5}
-            alt="Destination 5"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2xl border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-          <img
-            src={c6}
-            alt="Destination 6"
-            className="object-cover rounded-lg shadow-lg hover:shadow-2xl border-2 border-[#070e17] transition-transform duration-200 ease-in-out hover:scale-105"
-            style={{ height: "330px", width: "auto" }}
-          />
-        </div>
+        <div className="p-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        {cardData.map((card, index) => (
+          <Card key={index} {...card} />
+        ))}
+      </div>
+    </div>
       </div>
 
       <div className="relative flex flex-col items-start justify-center mt-20 ml-4 lg:ml-2">
