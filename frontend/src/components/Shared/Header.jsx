@@ -3,7 +3,7 @@ import logo from "../../assets/logo 2.png";
 
 function Header() {
   return (
-    <header className="flex justify-between items-center p-5 bg-[#070e17] text-white" >
+    <header className="flex justify-between items-center p-5 bg-[#0e1a2a] text-white" >
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-24 mr-12" />
           <nav className="flex">

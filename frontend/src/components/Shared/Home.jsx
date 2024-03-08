@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Card from "./city_card.jsx";
-
+import { FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
 import bck from "../../assets/flight.png";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
@@ -260,10 +260,10 @@ function Home() {
 
       <div className="ml-16 lg:ml-15 ">
         <h2
-          className="text-black text-lg lg:text-xl font-bold tracking-wide mb-8 ml-1"
+          className="text-black text-lg lg:text-xl font-bold tracking-wide"
           style={{ fontFamily: "Anta", paddingLeft: "0px" }}
         >
-          Trending From Chennai
+          Trending From Chennai <FaMapMarkerAlt className="mr-2" />
         </h2>
         <div className="p-8">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
