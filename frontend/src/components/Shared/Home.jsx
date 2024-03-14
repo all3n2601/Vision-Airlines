@@ -80,7 +80,8 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
 
   return (
-    <><div className="bg-[#f9f9f9] text-black min-h-screen snap-y snap-mandatory overflow-hidden">
+    <>
+      <div className="bg-[#f9f9f9] text-black min-h-screen snap-y snap-mandatory overflow-hidden">
       <Header />
       <div className="relative min-h-screen snap-start">
         <img src={bck} alt="Background" className="w-full object-cover" style={{ height: '80vh' }} />
@@ -111,18 +112,22 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
                   style={{ fontFamily: 'Anta' }} />
               </div>
               {showExtendedContent && (
-                <>
+                <><div className="flex items-center justify-between w-full space-x-4">
+                <div className="w-2/6"> {/* Adjusted for 30% width */}
                   <ReactDatePicker
                     selected={searchParams.departureDate}
                     onChange={(date) => setSearchParams(prevParams => ({ ...prevParams, departureDate: date }))}
                     monthsShown={2}
-                    className="w-full p-4 border-2 bg-[#edebebe7] text-[#070e17] rounded-md border-2:"
-                    style={{ fontFamily: "Anta" }} />
+                    className="w-full p-4 border-2 bg-[#edebebe7] text-[#070e17] rounded-md"
+                    style={{ fontFamily: "Anta" }}
+                  />
+                </div>
+                <div className="w-4/6"> {/* Adjusted for 65% width */}
                   <select
                     name="class"
                     value={searchParams.class}
                     onChange={handleInputChange}
-                    className="w-full p-4 border-2 bg-[#edebebe7] border-0 text-[#070e17]"
+                    className="w-full p-4 border-2 bg-[#edebebe7] text-[#070e17] rounded-md"
                     style={{ fontFamily: "Anta" }}
                   >
                     <option value="">Select Class</option>
@@ -130,6 +135,9 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
                     <option value="business">Business</option>
                     <option value="firstClass">First Class</option>
                   </select>
+                </div>
+              </div>
+              
                   <div className="flex justify-between">
                     <div className="flex-1 mx-2">
                       <label
