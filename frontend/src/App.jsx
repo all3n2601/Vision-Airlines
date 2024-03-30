@@ -12,6 +12,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./Services/store";
 import SearchFlightsPage from "./pages/Shared/SearchFlightsPage";
 import PassengerDeatil from "./pages/Shared/PassengerDetail";
+import ContactUsPage from "./pages/Shared/ContactUsPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/search-flights" element={< SearchFlightsPage/>} />
             <Route path="/passenger-detail" element={< PassengerDeatil/>} />
+            <Route path="/contact-us" element={< ContactUsPage/>} />
             {/* <Route element={<PrivateRoute />}> */}
             <Route path="/book-ticket" element={<BookTicketPage />} />
             {/* </Route> */}
