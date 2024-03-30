@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Card from "./city_card.jsx";
 import { FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
-import bck from "../../assets/flight.png";
+import bck from "../../assets/bck.jpg";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
@@ -113,7 +113,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
               </div>
               {showExtendedContent && (
                 <><div className="flex items-center justify-between w-full space-x-4">
-                <div className="w-2/6"> {/* Adjusted for 30% width */}
+                <div className="w-2/6">
                   <ReactDatePicker
                     selected={searchParams.departureDate}
                     onChange={(date) => setSearchParams(prevParams => ({ ...prevParams, departureDate: date }))}
@@ -122,7 +122,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
                     style={{ fontFamily: "Anta" }}
                   />
                 </div>
-                <div className="w-4/6"> {/* Adjusted for 65% width */}
+                <div className="w-4/6"> 
                   <select
                     name="class"
                     value={searchParams.class}

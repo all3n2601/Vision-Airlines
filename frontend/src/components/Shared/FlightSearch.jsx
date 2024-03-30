@@ -24,7 +24,7 @@ function FlightSearch() {
     flightType: 'Airbus A320',
     totalTime: '21h',
     class: 'Economy',
-    rate: '$200'
+    rate: '200'
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ function FlightSearch() {
     flightType: 'Boeing 777',
     totalTime: '12h',
     class: 'Business',
-    rate: '$1200'
+    rate: '1200'
   },
   {
     id: 3,
@@ -52,7 +52,7 @@ function FlightSearch() {
     flightType: 'Boeing 787 Dreamliner',
     totalTime: '14h',
     class: 'First Class',
-    rate: '$2500'
+    rate: '2500'
   },
   {
     id: 4,
@@ -66,7 +66,7 @@ function FlightSearch() {
     flightType: 'Airbus A380',
     totalTime: '10h',
     class: 'Economy',
-    rate: '$700'
+    rate: '700'
   },
   {
     id: 5,
@@ -80,7 +80,7 @@ function FlightSearch() {
     flightType: 'Airbus A350',
     totalTime: '8h',
     class: 'Business',
-    rate: '$1100'
+    rate: '1100'
   },
   {
     id: 6,
@@ -94,7 +94,7 @@ function FlightSearch() {
     flightType: 'Boeing 747',
     totalTime: '14h',
     class: 'Economy',
-    rate: '$900'
+    rate: '900'
   }
 ];
 
