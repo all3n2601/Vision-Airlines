@@ -30,19 +30,7 @@ const aeroplane = new Schema({
 
 const aeroplaneSchema = mongoose.model("aeroplane", aeroplane, "Flights");
 
-const passenger = new Schema({
-  passengerID: { type: String, required: true },
-  passengerName: { type: String, required: true },
-  passengerAge: { type: Number, required: true },
-  passengerDOB: { type: Date, required: true },
-  passengerphone: { type: Number, required: true },
-  passengermail: { type: String, required: true },
-  passengerAddress: { type: String },
-  passengerGender: { type: String, required: true },
-  passengerDisabilities: { type: String, enum: ["Yes", "No"], default: "No" },
-});
 
-const passengerSchema = mongoose.model("passenger", passenger, "Passengers");
 
 const airport = new Schema({
   airportID: { type: String, required: true },
