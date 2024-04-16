@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const Passenger = new mongoose.Schema({
+const Passenger = new Schema({
   passengerID: { type: String, required: true, unique: true, default: "PAS" + Date.now()},
   passengerName: { type: String, required: true,  },
   passengerAge: { type: Number, required: true, default: 0},

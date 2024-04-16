@@ -1,12 +1,16 @@
 import React from 'react';
 import Signin from '../../components/Auth/Signin';
+import Header from '../../components/Shared/Header';
+import Footer from '../../components/Shared/Footer';
 
 function SignInPage(){
     return (
-        <div>
-           <Signin/>
-        </div>
+        <>
+           <Header/>
+           <Signin />
+           <Footer />
+        </>
     )
 }
-
+ 
 export default SignInPage;

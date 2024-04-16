@@ -5,11 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const registerPassenger = asyncHandler(async (req, res) => {
   const { passengerEmail, password } = req.body;
-  if (!email || !password) {
+  if (!passengerEmail || !password) {
     res.status(400);
     throw new Error("All fields are required");
   }
-  const PassengerExist = await Passenger.findOne({ email });
+  const PassengerExist = await Passenger.findOne({ passengerEmail });
   if (PassengerExist) {
     res.status(400);
     throw new Error("Passenger aldready exist");
@@ -18,7 +18,7 @@ const registerPassenger = asyncHandler(async (req, res) => {
   hashedPassword = await bcrypt.hash(password, 10);
 
   const newPassenger = await Passenger.create({ 
-    email: email,
+    email: passengerEmail,
     password: hashedPassword,
   });
 
@@ -33,18 +33,18 @@ const registerPassenger = asyncHandler(async (req, res) => {
 });
 
 const loginPassenger = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { passengerEmail, password } = req.body;
+  if (!passengerEmail || !password) {
     res.status(400);
     throw new Error("Input all fields");
   }
-  const passenger = await Passenger.findOne({ email });
+  const passenger = await Passenger.findOne({ passengerEmail });
   if (passenger && (await bcrypt.compare(password, passenger.password))) {
     const accessToken = jwt.sign(
       {
         passenger: {
           id: passenger.id,
-          email: passenger.email,
+          email: passenger.passengerEmail,
         },
       },
       process.env.ACCESS_TOKEN_KEY,
@@ -60,6 +60,8 @@ const loginPassenger = asyncHandler(async (req, res) => {
 const currentPassenger = asyncHandler(async (req, res) => {
   res.json(req.passenger);
 });
+
+
 
 module.exports = {
   registerPassenger,
