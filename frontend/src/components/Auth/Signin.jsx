@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+// import { motion } from "framer-motion";
+// import { useInView } from "react-intersection-observer";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 

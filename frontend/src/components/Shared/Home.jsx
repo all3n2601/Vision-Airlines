@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Card from "./city_card.jsx";
 import { FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
-import bck from "../../assets/bck.jpg";
+import bck from "../../assets/bck.jpeg";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
