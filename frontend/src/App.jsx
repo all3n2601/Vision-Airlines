@@ -13,7 +13,7 @@ import { persistor, store } from "./Services/store";
 import SearchFlightsPage from "./pages/Shared/SearchFlightsPage";
 import PassengerDeatil from "./pages/Shared/PassengerDetail";
 import ContactUsPage from "./pages/Shared/ContactUsPage";
-
+import Checkin from "./pages/Shared/check_in";
 function App() {
   return (
     <Provider store={store}>
@@ -27,6 +27,7 @@ function App() {
             <Route path="/search-flights" element={< SearchFlightsPage/>} />
             <Route path="/passenger-detail" element={< PassengerDeatil/>} />
             <Route path="/contact-us" element={< ContactUsPage/>} />
+            <Route path="/check-in" element={< Checkin/>} />
             {/* <Route element={<PrivateRoute />}> */}
             <Route path="/book-ticket" element={<BookTicketPage />} />
             {/* </Route> */}

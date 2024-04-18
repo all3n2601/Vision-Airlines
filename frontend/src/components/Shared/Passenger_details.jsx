@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaUser, FaEnvelope, FaPhone, FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaPhone, FaCheckSquare, FaRegSquare, FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
+import { Dialog, Transition } from '@headlessui/react';
 
 const PassengerDetail = ({
   departureCity = 'Hyderabad',
@@ -23,7 +24,7 @@ const PassengerDetail = ({
 
   const [passengers, setPassengers] = useState([{ ...initialPassengerState }]);
   const [formErrors, setFormErrors] = useState([{}]);
-
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const handleValidation = () => {
     const newErrors = passengers.map(passenger => {
       let errors = {};
@@ -41,7 +42,7 @@ const PassengerDetail = ({
     setFormErrors(newErrors);
     return !newErrors.some(error => Object.keys(error).length !== 0);
   };
-
+  const [agreeTerms, setAgreeTerms] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (handleValidation()) {
@@ -51,12 +52,14 @@ const PassengerDetail = ({
       console.log("Form has errors.");
     }
   };
-
-  const handleChange = (index, e) => {
-    const updatedPassengers = [...passengers];
-    updatedPassengers[index][e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setPassengers(updatedPassengers);
-  };
+  const toggleTermsDialog = () => {
+    setIsTermsOpen(!isTermsOpen);  // Toggle the visibility state
+};
+  // const handleChange = (index, e) => {
+  //   const updatedPassengers = [...passengers];
+  //   updatedPassengers[index][e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  //   setPassengers(updatedPassengers);
+  // };
 
   const addPassenger = () => {
     setPassengers([...passengers, { ...initialPassengerState }]);
@@ -71,6 +74,16 @@ const PassengerDetail = ({
     const updatedErrors = [...formErrors];
     updatedErrors.splice(index, 1);
     setFormErrors(updatedErrors);
+  };
+
+  const handleChange = (index, e) => {
+    const { name, value, checked, type } = e.target;
+    const newPassengers = [...passengers];
+    newPassengers[index] = {
+      ...newPassengers[index],
+      [name]: type === 'checkbox' ? checked : value
+    };
+    setPassengers(newPassengers);
   };
 
   return (
@@ -196,6 +209,17 @@ const PassengerDetail = ({
   <button type="button" onClick={addPassenger} className="text-blue-500 hover:text-blue-700 transition duration-150">
     <FaPlusCircle className="inline mr-1"/>Add Another Passenger
   </button>
+  <div>
+    <input
+        type="checkbox"
+        checked={agreeTerms} // Assume agreeTerms is another state variable you have
+        onChange={e => setAgreeTerms(e.target.checked)}
+    />
+    <label>I agree to the terms and conditions</label>
+    <button type="button" onClick={toggleTermsDialog}>
+        View Terms
+    </button>
+</div>
 
   <div className="flex justify-end mt-4">
     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -203,7 +227,63 @@ const PassengerDetail = ({
     </button>
   </div>
 </form>
+<Transition show={isTermsOpen} as={React.Fragment}>
+        <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={() => setIsTermsOpen(false)}>
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={React.Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
+            </Transition.Child>
+            <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span>
+            <Transition.Child
+              as={React.Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                  Terms and Conditions
+                </Dialog.Title>
+                <div>
+    <h1>Terms and Conditions</h1>
+    <p><strong>Baggage Allowance:</strong> Each passenger is allowed 23kg of checked luggage and one piece of hand luggage not exceeding 7kg. Additional charges apply for excess weight.</p>
+    <p><strong>Hand Luggage:</strong> Hand luggage must fit under the seat in front of you or in an overhead bin. Restrictions apply to liquids, which must be in containers of no more than 100ml.</p>
+    <p><strong>Food and Beverages:</strong> Complimentary meals and beverages are provided on all international flights. Special meals are available upon request 48 hours before departure.</p>
+    <p><strong>Payments and Refunds:</strong> We accept all major credit cards. Refunds and cancellations are subject to our refund policy, detailed on our website and available upon booking.</p>
+    <p><strong>Ticketing:</strong> Tickets can be booked online, via phone, or through authorized agents. Electronic tickets are issued by email and must be presented at check-in.</p>
+    <p><strong>Airport Rules:</strong> Passengers must check in at least 2 hours before departure for all flights. Security procedures are strictly enforced.</p>
+    <p><strong>Prohibited Items:</strong> Items such as explosives, compressed gases, oxidizing materials, and poisonous substances are prohibited.</p>
+    <p><strong>Conduct on Board:</strong> Respectful behavior is expected of all passengers. Smoking is not permitted on any of our flights.</p>
+    <p><strong>Special Assistance:</strong> Please inform us at the time of booking if you require wheelchair access or any other special assistance.</p>
+    <p><strong>Legal Compliance:</strong> Passengers are responsible for obtaining all required travel documents and visas and must comply with the laws of the countries they are entering.</p>
+    <button onClick={toggleTermsDialog}>Close</button>
+</div>
 
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={() => setIsTermsOpen(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };
