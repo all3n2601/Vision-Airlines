@@ -5,10 +5,10 @@ import bck from "../../assets/bck.jpeg";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
-import c1 from "../../assets/Lonodn.jpg";
-import c2 from "../../assets/Melborne.jpg";
-import c3 from "../../assets/PAris.avif";
-import c4 from "../../assets/Rome.jpg";
+import c1 from "../../assets/lonodn.jpg";
+import c2 from "../../assets/melborne.jpg";
+import c3 from "../../assets/paris.avif";
+import c4 from "../../assets/rome.jpg";
 import c5 from "../../assets/singapore.jpg";
 import c6 from "../../assets/sydney.jpg";
 import c7 from "../../assets/bali.avif";
@@ -84,7 +84,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
       <div className="bg-[#f9f9f9] text-black min-h-screen snap-y snap-mandatory overflow-hidden">
       <Header />
       <div className="relative min-h-screen snap-start">
-        <img src={bck} alt="Background" className="w-full object-cover" style={{ height: '80vh' }} />
+        <img src={bck} alt="Background" className="w-full object-cover" style={{ height: '90vh' }} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 max-w-4xl p-5 bg-white bg-opacity-90 rounded-lg shadow">
           <h2 className="text-center text-2xl font-bold mb-5">Hi, where would you like to go?</h2>
           <div ref={formRef}>
