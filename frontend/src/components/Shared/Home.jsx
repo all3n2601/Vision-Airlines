@@ -82,6 +82,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
   return (
     <>
       <div className="bg-[#f9f9f9] text-black min-h-screen snap-y snap-mandatory overflow-hidden">
+      <Header />
       <div className="relative min-h-screen snap-start">
         <img src={bck} alt="Background" className="w-full object-cover" style={{ height: '90vh' }} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 max-w-4xl p-5 bg-white bg-opacity-90 rounded-lg shadow">
