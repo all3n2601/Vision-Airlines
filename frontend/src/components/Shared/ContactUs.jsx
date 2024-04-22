@@ -3,12 +3,12 @@ import React from 'react';
 const ContactUs = () => {
   return (
     // Container for demo purpose
-<div className="container my-24 mx-auto md:px-6">
+<div className="container mb-16 mx-auto md:px-6 h-[80%]">
 {/* Section: Design Block */}
-  <section className="mb-32">
+  <section className="">
     <div className="flex justify-center">
-      <div className="text-center md:max-w-xl lg:max-w-3xl">
-        <h2 className="mb-12 px-6 text-3xl font-bold">Contact us</h2>
+      <div className="text-center m-2 md:max-w-xl lg:max-w-3xl">
+        <h2 className="px-6 text-3xl font-bold">Contact us</h2>
       </div>
     </div>
 

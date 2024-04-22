@@ -12,6 +12,7 @@ function Header() {
             <Link to="/travel-info" className="mr-4 hover:underline"style={{fontFamily:'Anta'}}>Travel Info </Link>
             <Link to="/boarding-pass" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Boarding Pass </Link>
             <Link to="/visa-inquiry" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Visa Enquiry </Link>
+            <Link to="/user-reviews" className="mr-4 hover:underline" style={{fontFamily:'Anta'}}>Reviews </Link>
           </nav>
         </div>
         <Link to="/sign-in" className="hover:underline" style={{fontFamily:'Anta'}}>Login/Sign In </Link>

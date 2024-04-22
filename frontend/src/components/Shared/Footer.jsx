@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <footer
-      className="bg-[#070e17] text-white p-8 rounded-t-3xl mt-10 w-full"
+      className="bg-[#070e17] h-[10%] text-white p-4 rounded-t-3xl mt-1.5 w-full"
       style={{ fontFamily: "Anta" }}
     >
       <div className="flex flex-wrap justify-between -mx-4 text-lg lg:text-xl">
