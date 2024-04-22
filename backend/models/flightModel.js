@@ -5,8 +5,12 @@ const aeroplane = new Schema({
   aeroplaneID: { type: String, required: true },
   aeroplaneName: { type: String, required: true },
   totalSeats: { type: Number, required: true },
-  bookedSeats: { type: Number, required: true },
-  class: {
+  bookedSeats: { type: Number, required: true, default: 5 },
+  startDestination: { type: String, required: true },
+  endDestination: { type: String, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
+  classs: {
     type: String,
     enum: ["Economy", "First-Class", "Business-Class"],
     default: "Economy",
@@ -28,4 +32,4 @@ const aeroplane = new Schema({
   },
 });
 
-module.exports =  mongoose.model("aeroplane", aeroplane, "Flights");
+module.exports = mongoose.model("aeroplane", aeroplane, "Flights");
