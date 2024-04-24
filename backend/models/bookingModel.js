@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const booking = new Schema({
-  bookingID: { type: String, required: true },
+  bookingID: { type: String },
   bookingDate: { type: Date, required: true },
   passengerID: {
     unique: true,
@@ -31,6 +31,7 @@ const booking = new Schema({
   seats: [{ type: String, required: true }],
   concessions: { type: String },
   Insurance: { Type: String, enum: ["Yes", "No"], default: "No" },
+  status: { Type: String, enum: ["Active", "Cancelled"] },
 });
 
 module.exports = mongoose.model("booking", booking, "bookings");
