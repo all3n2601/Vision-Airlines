@@ -5,7 +5,7 @@ import Footer from "../../components/Shared/Footer"
 
 function HomePage() {
   return (
-    <div>
+    <div className="relative">
       <Home/>
       <Footer/>
     </div>
