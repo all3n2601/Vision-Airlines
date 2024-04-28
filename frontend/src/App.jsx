@@ -18,6 +18,7 @@ import PlanTripPage from "./pages/Shared/PlanTripPage";
 import TravelInfoPage from "./pages/Shared/TravelInfoPage";
 import BoardingPassPage from "./pages/Shared/BoardingPassPage";
 import VisaEnquiryPage from "./pages/Shared/VisaEnquiryPage";
+import Payment from "./pages/Shared/Payment";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/visa-inquiry" element={< VisaEnquiryPage/>} />
             {/* <Route element={<PrivateRoute />}> */}
             <Route path="/book-ticket" element={<BookTicketPage />} />
+            <Route path="/payment" element={<Payment/>} />
             {/* </Route> */}
           </Routes>
         </Router>
