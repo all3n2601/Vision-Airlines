@@ -38,7 +38,7 @@ const VisionAirlinesCheckIn = () => {
     };
 
     return (
-        <div className="flex max-w-8xl mx-auto shadow-lg rounded-lg overflow-hidden" style={{ fontFamily: "Anta" }}>
+        <div className="flex max-w-8xl mx-auto shadow-lg rounded-lg overflow-hidden pb-24" style={{ fontFamily: "Anta" }}>
             <div className="w-3/4 p-4 bg-white">
                 <div className="text-center mb-4">
                     <h1 className="text-2xl font-bold text-blue-800">Vision Airlines Check-In</h1>
