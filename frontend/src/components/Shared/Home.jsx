@@ -5,8 +5,8 @@ import bck from "../../assets/bck.jpeg";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
-import c1 from "../../assets/lonodn.jpg";
-import c2 from "../../assets/melborne.jpg";
+import c1 from "../../assets/london.jpg";
+import c2 from "../../assets/melbourne.jpg";
 import c3 from "../../assets/paris.avif";
 import c4 from "../../assets/rome.jpg";
 import c5 from "../../assets/singapore.jpg";
@@ -18,9 +18,8 @@ import rightArrow from "../../assets/right.png";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../../components/Shared/Header";
+import black_white from "../../assets/logo-png-back.png";
 const items = [img1, img2, img3];
-import { useNavigate } from "react-router-dom";
-
 
 function Home() {
   const [searchParams, setSearchParams] = useState({
@@ -31,12 +30,6 @@ function Home() {
     adults: 1,
     children: 0,
   });
-
-  const navigate = useNavigate();
-
-  const handleSearchFlight =() =>{
-    navigate('/search-flights')    
-  }
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const goToPreviousImage = () => {
@@ -260,7 +253,6 @@ function Home() {
                 </>
               )}
               <button
-              onClick={handleSearchFlight}
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
               >
@@ -280,52 +272,31 @@ function Home() {
           ))}
         </div>
       </section>
-      <section className="min-h-screen relative">
-        <div className=" flex items-center justify-center p-8 bg-white">
-          <div className="relative flex flex-col items-start justify-center mt-20 lg:ml-2">
-            <h2
-              className="flex items-center text-black text-lg lg:text-xl font-bold tracking-wide m-4 ml-8 lg:ml-16"
-              style={{
-                fontFamily: "Anta",
-                paddingLeft: "0px",
-                paddingTop: "0px",
-              }}
-            >
-              Travell with Vision Airline's..
-            </h2>
-
-            <div className="flex items-center justify-center w-full">
-              <button
-                onClick={goToPreviousImage}
-                className="absolute left-4 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 transition duration-150 ease-in-out w-12 h-12"
-              >
-                <img
-                  src={leftArrow}
-                  alt="Previous"
-                  className="  h-full object-contain"
-                />
-              </button>
-              <div className="max-w-screen-lg max-h-[500px] w-full h-full overflow-hidden rounded-lg shadow-xl">
-                <img
-                  src={items[currentImageIndex]}
-                  alt="Gallery"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <button
-                onClick={goToNextImage}
-                className="absolute right-4 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 transition duration-150 ease-in-out w-12 h-12"
-              >
-                <img
-                  src={rightArrow}
-                  alt="Next"
-                  className="w-full h-full object-contain"
-                />
-              </button>
-            </div>
-          </div>
+      <section className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, #a2bcd9, #ffffff)' }}>
+                <div className="relative flex flex-col items-start justify-center mt-1 ">
+                    <h2 className="text-black text-lg lg:text-xl font-bold tracking-wide m-4 " style={{ fontFamily: "Anta" }}>
+                        Travel with Vision Airline's..
+                    </h2>
+    <div className="w-full max-w-5xl p-4 shadow-xl overflow-hidden " style={{
+        borderRadius: '20px',
+        backgroundColor: '#e0e1e8',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+    }}>
+        <div className="flex items-center justify-between relative p-4">
+            <button onClick={goToPreviousImage} className="absolute left-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12">
+                <img src={leftArrow} alt="Previous" className="w-full h-full object-contain" />
+            </button>
+            <img src={items[currentImageIndex]} alt="Gallery" className="object-cover rounded-lg" style={{ height: '500px', width: '100%' }} />
+            <button onClick={goToNextImage} className="absolute right-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12">
+                <img src={rightArrow} alt="Next" className="w-full h-full object-contain" />
+            </button>
         </div>
-      </section>
+        
+    </div>
+  </div>
+</section>
+
+
       {/* </div> */}
     </>
   );
