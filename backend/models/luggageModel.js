@@ -12,4 +12,5 @@ const luggage = new Schema({
   },
 });
 
-module.exports = mongoose.model("luggage", luggage, "luggage");
+const Luggage = mongoose.model("Luggage", luggage, "luggage");
+module.exports = Luggage;

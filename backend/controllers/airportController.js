@@ -36,7 +36,7 @@ const deleteAirport = asyncHandler(async (req, res) => {
 });
 
 const getAirport = asyncHandler(async (req, res) => {
-  const Airport = await airport.findById(req.params.id);
+  const Airport = await airport.find();
   if (!Airport) {
     res.status(404);
     throw new Error("Airport not found");

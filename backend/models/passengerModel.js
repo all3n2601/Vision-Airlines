@@ -1,20 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Passenger = new Schema({
-  passengerID: { type: String, required: true, unique: true, default: "PAS" + Date.now()},
-  passengerName: { type: String, required: true,  },
-  passengerAge: { type: Number, required: true, default: 0},
-  passengerDOB: { type: Date, required: true,default:Date.now() },
-  passengerPhone: { type: Number, required: true ,default:0},
-  passengerEmail: { type: String, required: true, unique: true},
-  passengerPassword:{type:String , required:true},
+const passenger = new Schema({
+  passengerID: {
+    type: String,
+    unique: true,
+    default: "PAS" + Date(),
+  },
+  passengerName: { type: String },
+  passengerAge: { type: Number },
+  passengerDOB: { type: Date },
+  passengerPhone: { type: Number },
+  passengerEmail: { type: String, required: true, unique: true },
+  passengerPassword: { type: String, required: true },
   passengerAddress: { type: String },
-  passengerGender: { type: String,enum:["Male" , "Female" , "Others"], required: true, },
+  passengerGender: {
+    type: String,
+    enum: ["Male", "Female", "Others"],
+  },
   passengerDisabilities: { type: String, enum: ["Yes", "No"], default: "No" },
 });
 
-Passenger.virtual('age').get(function () {
+passenger.virtual("age").get(function () {
   const dob = this.passengerDOB;
   const now = new Date();
   const diff = now - dob;
@@ -22,5 +29,5 @@ Passenger.virtual('age').get(function () {
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 });
 
-
-module.exports = mongoose.model("Passenger", Passenger, "passengers");
+const Passenger = mongoose.model("Passenger", passenger, "passengers");
+module.exports = Passenger;

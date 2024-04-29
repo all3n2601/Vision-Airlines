@@ -1,37 +1,37 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const booking = new Schema({
+const bookingSchema = new Schema({
   bookingID: { type: String },
   bookingDate: { type: Date, required: true },
   passengerID: {
     unique: true,
-    type: mongoose.Schema.Types.passengerID,
-    ref: "passengerSchema",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Passenger",
   },
   airportID: {
     unique: true,
-    type: mongoose.Schema.Types.airportID,
-    ref: "airportSchema",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Airport",
   },
   aeroplaneID: {
     unique: true,
-    type: mongoose.Schema.Types.aeroplaneID,
-    ref: "aeroplaneSchema",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Flight",
   },
   price: { type: Number, required: true },
   co_passengersID: [
     {
-      type: mongoose.Schema.Types.passengerID,
-      ref: "passengerSchema",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Passenger",
     },
   ],
-  luggageID: [{ type: mongoose.Schema.Types.luggageID, ref: "luggageSchema" }],
-
+  luggageID: [{ type: mongoose.Schema.Types.ObjectId, ref: "Luggage" }],
   seats: [{ type: String, required: true }],
   concessions: { type: String },
-  Insurance: { Type: String, enum: ["Yes", "No"], default: "No" },
-  status: { Type: String, enum: ["Active", "Cancelled"] },
+  insurance: { type: String, enum: ["Yes", "No"], default: "No" },
+  status: { type: String, enum: ["Active", "Cancelled"] },
 });
 
-module.exports = mongoose.model("booking", booking, "bookings");
+const Booking = mongoose.model("Booking", bookingSchema, "bookings");
+module.exports = Booking;
