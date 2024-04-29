@@ -1,11 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import London from "../../assets/london.jpg";
-import Melbourne from "../../assets/melbourne.jpg";
-import Sydney from "../../assets/sydney.jpg";
-import Singapore from "../../assets/singapore.jpg";
-import Bali from "../../assets/bali.avif";
-import Brisbane from "../../assets/brisbane.avif";
+import London from "../../assets/images/london.jpg";
+import Melbourne from "../../assets/images/melbourne.jpg";
+import Sydney from "../../assets/images/sydney.jpg";
+import Singapore from "../../assets/images/singapore.jpg";
+import Bali from "../../assets/images/bali.avif";
+import Brisbane from "../../assets/images/brisbane.avif";
 
 const Card = ({ title, image }) => {
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, InputAdornment } from '@mui/material';
 import { FaCreditCard, FaMoneyBillWave, FaUser, FaCalendar, FaLock } from 'react-icons/fa';
-import successAnimation from '../../assets/animat-checkmark.gif';
-import debitCardImage from '../../assets/debit.png'; 
+import successAnimation from "../../assets/images/animat-checkmark.gif";
+import debitCardImage from '../../assets/images/debit.png'; 
 
 const PaymentPage = () => {
     const [paymentType, setPaymentType] = useState('credit');

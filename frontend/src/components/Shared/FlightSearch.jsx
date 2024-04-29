@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/images/logo.png';
 import FlightCard from './FlightCard';
 import { FaSortAmountDownAlt, FaEdit } from 'react-icons/fa'; 
 
