@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaPlaneDeparture, FaPlaneArrival, FaCaretDown, FaUtensils, FaSuitcaseRolling, FaCoins, FaExchangeAlt, FaTimesCircle, FaRegCheckCircle } from 'react-icons/fa';
 import { IoMdAirplane } from 'react-icons/io';
+import { useNavigate } from "react-router-dom";
 
 const FlightCard = ({ flight }) => {
   const [showDetails, setShowDetails] = useState(false);
   const detailsRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleProceed =() =>{
+    navigate('/passenger-detail')
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -73,7 +79,7 @@ const FlightCard = ({ flight }) => {
         <div className="flex items-center"><FaTimesCircle className="mr-2" /> Cancel & Refund Fee - INR 2500 till 72 hours</div>
         <div className="flex items-center"><FaTimesCircle className="mr-2" /> NoShow Fee - Charges Apply</div>
         
-        <button className="bg-blue-500 text-white rounded-lg px-4 py-2 absolute right-0 bottom-0 hover:bg-blue-600 cursor-pointer">Proceed</button>
+        <button onClick={handleProceed}  className="bg-blue-500 text-white rounded-lg px-4 py-2 absolute right-0 bottom-0 hover:bg-blue-600 cursor-pointer">Proceed</button>
       </div>
 
       )}

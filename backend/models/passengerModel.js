@@ -14,7 +14,7 @@ const Passenger = new Schema({
   passengerDisabilities: { type: String, enum: ["Yes", "No"], default: "No" },
 });
 
-PassengerSchema.virtual('age').get(function () {
+Passenger.virtual('age').get(function () {
   const dob = this.passengerDOB;
   const now = new Date();
   const diff = now - dob;

@@ -5,7 +5,7 @@ import Footer from "../../components/Shared/Footer"
 
 function PlanTripPage() {
   return (
-    <div>
+    <div className="relative">
       <Header/>
       <PlanTrip/>
       <Footer/>

@@ -5,20 +5,22 @@ import bck from "../../assets/bck.jpeg";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.png";
 import img3 from "../../assets/img3.webp";
-import c1 from "../../assets/Lonodn.jpg";
-import c2 from "../../assets/Melborne.jpg";
-import c3 from "../../assets/PAris.avif";
-import c4 from "../../assets/Rome.jpg";
+import c1 from "../../assets/lonodn.jpg";
+import c2 from "../../assets/melborne.jpg";
+import c3 from "../../assets/paris.avif";
+import c4 from "../../assets/rome.jpg";
 import c5 from "../../assets/singapore.jpg";
 import c6 from "../../assets/sydney.jpg";
 import c7 from "../../assets/bali.avif";
-import c8 from "../../assets/Brisbane.avif";
+import c8 from "../../assets/brisbane.avif";
 import leftArrow from "../../assets/left.png";
-import rightArrow from "../../assets/Right.png";
+import rightArrow from "../../assets/right.png";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../../components/Shared/Header";
 const items = [img1, img2, img3];
+import { useNavigate } from "react-router-dom";
+
 
 function Home() {
   const [searchParams, setSearchParams] = useState({
@@ -29,6 +31,12 @@ function Home() {
     adults: 1,
     children: 0,
   });
+
+  const navigate = useNavigate();
+
+  const handleSearchFlight =() =>{
+    navigate('/search-flights')    
+  }
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const goToPreviousImage = () => {
@@ -252,6 +260,7 @@ function Home() {
                 </>
               )}
               <button
+              onClick={handleSearchFlight}
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
               >
