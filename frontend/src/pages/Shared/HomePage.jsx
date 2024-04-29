@@ -6,6 +6,7 @@ import Footer from "../../components/Shared/Footer"
 function HomePage() {
   return (
     <div className="relative">
+      <Header/>
       <Home/>
       <Footer/>
     </div>
