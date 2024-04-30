@@ -3,28 +3,26 @@ const booking = require("../models/bookingModel.js");
 
 const newBooking = asyncHandler(async (req, res) => {
   const {
-    bookingDate,
-    passengerID,
-    airportID,
-    aeroplaneID,
+    passengerName,
+    Email,
+    phone,
     price,
-    co_passengersID,
-    luggageID,
-    seats,
-    concessions,
-    Insurance,
+    startDestination,
+    endDestination,
+    adult,
+    child,
+    paymentstatus,
   } = req.body;
   if (
-    !bookingDate ||
-    !passengerID ||
-    !airportID ||
-    !aeroplaneID ||
+    !passengerName ||
+    !Email ||
+    !phone ||
     !price ||
-    !co_passengersID ||
-    !luggageID ||
-    !seats ||
-    !concessions ||
-    !Insurance
+    !startDestination ||
+    !endDestination ||
+    !adult ||
+    !child ||
+    !paymentstatus
   ) {
     res.status(400);
     throw new Error("All fields Mandatory");
@@ -35,16 +33,15 @@ const newBooking = asyncHandler(async (req, res) => {
     throw new Error("Booking aldready exists");
   }
   const newbooking = await booking.create({
-    bookingDate: bookingDate,
-    passengerID: passengerID,
-    airportID: airportID,
-    aeroplaneID: aeroplaneID,
+    passengerName: passengerName,
+    Email: Email,
+    phone: phone,
     price: price,
-    co_passengersID: co_passengersID,
-    luggageID: luggageID,
-    seats: seats,
-    concessions: concessions,
-    Insurance: Insurance,
+    startDestination: startDestination,
+    endDestination: endDestination,
+    adult: adult,
+    child: child,
+    paymentstatus: paymentstatus,
   });
   if (newbooking) {
     res.status(201).json(newbooking);
@@ -59,14 +56,14 @@ const deleteBooking = asyncHandler(async (req, res) => {
     throw new error("Booking not found");
   }
   const cancelBooking = await booking.findByIdAndUpdate(req.params.id, {
-    status: "Cancelled",
+    paymentstatus: "Cancelled",
   });
 
   res.status(200).json(cancelBooking);
 });
 
 const getBooking = asyncHandler(async (req, res) => {
-  const Booking = await booking.findById(req.params.id);
+  const Booking = await booking.find();
   if (!Booking) {
     res.status(404);
     throw new Error("Booking not found");
