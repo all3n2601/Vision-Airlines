@@ -1,53 +1,54 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaPlaneDeparture, FaPlaneArrival, FaCaretDown, FaUtensils, FaSuitcaseRolling, FaCoins, FaExchangeAlt, FaTimesCircle, FaRegCheckCircle } from 'react-icons/fa';
 import { IoMdAirplane } from 'react-icons/io';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
+
+
+
 
 const FlightCard = ({ flight }) => {
   const [showDetails, setShowDetails] = useState(false);
   const detailsRef = useRef(null);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const searchParams = location.state?.searchParams;
+
   const handleProceed =() =>{
-    navigate('/passenger-detail')
+    navigate('/passenger-detail',{state:{flight,searchParams}} )
   }
 
   const classPricing = {
-    "Economy": 3000, // Base price for Economy class
-    "Business-Class": 8000, // Higher price for Business class
-    "First-Class": 15000, // Premium price for First class
+    "Economy": 3000, 
+    "Business-Class": 8000, 
+    "First-Class": 15000, 
   };
   
-  // Function to assign a price based on the class of flight
+ 
   function getPriceByClass(flightClass) {
-    return classPricing[flightClass] || 0; // Default to 0 if class not found
+    return classPricing[flightClass] || 0;
   }
 
   function calculateTotalTime(startTime, endTime) {
    
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
-  
-    // Convert start and end times to minutes past midnight
+
     const startInMinutes = startHour * 60 + startMinute;
     const endInMinutes = endHour * 60 + endMinute;
-  
-    // Calculate the difference in minutes
+
     let durationInMinutes = endInMinutes - startInMinutes;
   
-    // Handle cases where the end time is on the next day (overnight flights)
     if (durationInMinutes < 0) {
-      durationInMinutes += 24 * 60; // Add 24 hours in minutes
+      durationInMinutes += 24 * 60;
     }
-  
-    // Convert the total minutes into hours and minutes
+
     const durationHours = Math.floor(durationInMinutes / 60);
     const durationMinutes = durationInMinutes % 60;
   
     return { hours: durationHours, minutes: durationMinutes };
   }
   
-  // Example usage
   const startTime = flight.startTime;
   const endTime = flight.endTime;
   const price = getPriceByClass(flight.classs);
@@ -103,7 +104,7 @@ const FlightCard = ({ flight }) => {
         </div>
         <div className="flex flex-col items-end">
           <p className="text-lg hover:text-blue-500">{flight.classs}</p>
-          <p className="text-lg hover:text-blue-500" style={{ fontFamily: "anta" }}>₹{price}</p>
+          <p className="text-lg hover:text-blue-500" style={{ fontFamily: "anta" }}> Per Person : ₹{price}</p>
           <FaCaretDown className="text-gray-400 hover:text-black mt-2" onClick={() => setShowDetails(!showDetails)} />
         </div>
       </div>

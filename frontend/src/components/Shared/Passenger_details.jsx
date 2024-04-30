@@ -9,17 +9,51 @@ import {
   FaPlusCircle,
 } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useLocation} from 'react-router-dom';
+import axios from "axios";
 
-const PassengerDetail = ({
-  departureCity = "Hyderabad",
-  arrivalCity = "Mumbai",
-  departureDate = "13 June 2024",
-  departureTime = "16:00",
-  arrivalDate = "13 June 2024",
-  arrivalTime = "20:20",
-  totalFare = "34,358",
-}) => {
+const PassengerDetail = ({}) => {
+
+  const [departure,setDeparture] = useState();
+  const [destination,setDestination] = useState();
+  const location = useLocation();
+  const searchParams = location.state?.searchParams;
+  const flight = location.state?.flight;
+
+  useEffect(()=>{
+
+    const fetchDeparture = async (e) => {
+      const res = await axios.get(
+        "http://localhost:4451/api/airport/getAirportName",
+        {
+          params: {
+            airportID: flight.startDestination,
+            
+          },
+        }
+      );
+      setDeparture(res.data[0].airportName);
+    };
+
+    const fetchDestination = async (e) => {
+      const res = await axios.get(
+        "http://localhost:4451/api/airport/getAirportName",
+        {
+          params: {
+            airportID:flight.endDestination,
+            
+          },
+        }
+      );
+      setDestination(res.data[0].airportName);
+    };
+
+    fetchDeparture();
+    fetchDestination();
+
+    console.log(departure);
+  },[flight.startDestination, flight.endDestination])
+
   const initialPassengerState = {
     firstName: "",
     lastName: "",
@@ -31,11 +65,23 @@ const PassengerDetail = ({
     travellingForBusiness: false,
   };
 
+  const classPricing = {
+    "Economy": 3000, 
+    "Business-Class": 8000, 
+    "First-Class": 15000, 
+  };
+  
+ 
+  function getPriceByClass(flightClass) {
+    return classPricing[flightClass] || 0;
+  }
 
 
+  const price = getPriceByClass(flight.classs);
   const [passengers, setPassengers] = useState([{ ...initialPassengerState }]);
   const [formErrors, setFormErrors] = useState([{}]);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
+  
   const handleValidation = () => {
     const newErrors = passengers.map((passenger) => {
       let errors = {};
@@ -58,7 +104,6 @@ const PassengerDetail = ({
     e.preventDefault();
     if (handleValidation()) {
       console.log("Form is valid, proceed to next page...");
-      // Proceed with form submission or navigation
     } else {
       console.log("Form has errors.");
     }
@@ -66,11 +111,8 @@ const PassengerDetail = ({
   const toggleTermsDialog = () => {
     setIsTermsOpen(!isTermsOpen); // Toggle the visibility state
   };
-  // const handleChange = (index, e) => {
-  //   const updatedPassengers = [...passengers];
-  //   updatedPassengers[index][e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-  //   setPassengers(updatedPassengers);
-  // };
+ 
+  const totalFare = searchParams.adults * price + searchParams.children * (price/2);
 
   const addPassenger = () => {
     setPassengers([...passengers, { ...initialPassengerState }]);
@@ -91,16 +133,21 @@ const PassengerDetail = ({
   const handlePayment=()=>{
     navigate('/payment')
   }
+  
+  
 
-  const handleChange = (index, e) => {
-    const { name, value, checked, type } = e.target;
-    const newPassengers = [...passengers];
-    newPassengers[index] = {
-      ...newPassengers[index],
-      [name]: type === "checkbox" ? checked : value,
+  const formattedDate = searchParams.departureDate.toLocaleDateString();
+
+  const handleChange = (index, event) => {
+    const { name, value, type, checked } = event.target;
+    const updatedPassengers = [...passengers];
+    updatedPassengers[index] = {
+      ...updatedPassengers[index],
+      [name]: type === 'checkbox' ? checked : value,
     };
-    setPassengers(newPassengers);
+    setPassengers(updatedPassengers);
   };
+
 
   return (
     <div
@@ -109,25 +156,25 @@ const PassengerDetail = ({
     >
       <header className="bg-gray-200 p-4 rounded-lg border border-gray-400">
         <h2 className="text-xl font-bold">
-          {departureCity} - {arrivalCity} • 1 Adult
+          {searchParams.departure} - {searchParams.destination} • Adult : {searchParams.adults} • Children : {searchParams.children}
         </h2>
         <p>One way</p>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p>
-              {departureDate} ({departureTime})
+              {formattedDate}
             </p>
-            <p>{departureCity}</p>
+            <p>{departure}</p>
           </div>
           <div>
             <p>
-              {arrivalDate} ({arrivalTime})
+              {formattedDate}
             </p>
-            <p>{arrivalCity}</p>
+            <p>{destination}</p>
           </div>
         </div>
         <div className="mt-4">
-          <p>Total fare: 1 ADULT</p>
+          <p>Total fare:  Adult : {searchParams.adults} • Children : {searchParams.children}</p>
           <p className="font-bold">INR {totalFare}</p>
           <p className="text-sm">
             Total fare includes discounts, taxes, and surcharges
@@ -170,7 +217,7 @@ const PassengerDetail = ({
                 <input
                   type="text"
                   id={`firstName${index}`}
-                  name={`firstName${index}`}
+                  name={"firstName"}
                   value={passenger.firstName}
                   onChange={(e) => handleChange(index, e)}
                   className="p-2 border rounded"
@@ -183,7 +230,7 @@ const PassengerDetail = ({
                 <input
                   type="text"
                   id={`lastName${index}`}
-                  name={`lastName${index}`}
+                  name={"lastName"}
                   value={passenger.lastName}
                   onChange={(e) => handleChange(index, e)}
                   className="p-2 border rounded"
@@ -200,7 +247,7 @@ const PassengerDetail = ({
                 <input
                   type="email"
                   id={`email${index}`}
-                  name={`email${index}`}
+                  name={"email"}
                   value={passenger.email}
                   onChange={(e) => handleChange(index, e)}
                   className="p-2 border rounded"
@@ -222,7 +269,7 @@ const PassengerDetail = ({
                 <input
                   type="tel"
                   id={`phone${index}`}
-                  name={`phone${index}`}
+                  name={"phone"}
                   value={passenger.phone}
                   onChange={(e) => handleChange(index, e)}
                   className="p-2 border rounded"
@@ -232,6 +279,7 @@ const PassengerDetail = ({
                 <input
                   id={`noFirstName${index}`}
                   type="checkbox"
+                  name="noFirstName"
                   checked={passenger.noFirstName}
                   onChange={(e) => handleChange(index, e)}
                   className="mr-2"
@@ -244,6 +292,7 @@ const PassengerDetail = ({
                 <input
                   id={`under18${index}`}
                   type="checkbox"
+                  name={"under18"}
                   checked={passenger.under18}
                   onChange={(e) => handleChange(index, e)}
                   className="mr-2"
@@ -256,6 +305,7 @@ const PassengerDetail = ({
                 <input
                   id={`travellingForBusiness${index}`}
                   type="checkbox"
+                  name="travellingForBusiness"
                   checked={passenger.travellingForBusiness}
                   onChange={(e) => handleChange(index, e)}
                   className="mr-2"

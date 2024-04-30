@@ -51,7 +51,7 @@ const getAirportName = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Airport not found");
   }
-  res.status(200).json({ message: airportName });
+  res.status(200).json( airportName );
 });
 
 module.exports = { createAirport, deleteAirport, getAirport, getAirportName };
