@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import logo from '../../assets/images/logo.png';
 import FlightCard from './FlightCard';
 import { FaSortAmountDownAlt, FaEdit } from 'react-icons/fa'; 
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
 function FlightSearch() {
+
+  const location = useLocation();
+  const searchParams = location.state?.searchParams; 
   const [isSortOptionsVisible, setIsSortOptionsVisible] = useState(false);
   const [flights, setFlights] = useState([]);
   const [showModifyDialog, setShowModifyDialog] = useState(false);
@@ -13,99 +19,118 @@ function FlightSearch() {
     setShowModifyDialog(true);
   };
 
+  const departure = searchParams.departure; // "DEL"
+  const destination = searchParams.destination; 
 
   
-  useEffect(() => {
-    const flightsData = [
-  {
-    id: 1,
-    departureDate: '2024-03-01',
-    departureAirport: 'BLR',
-    departureCity: 'Bengaluru',
-    departureTime: '13:00',
-    arrivalAirport: 'LAX',
-    arrivalCity: 'Los Angeles',
-    arrivalTime: '11:00',
-    flightType: 'Airbus A320',
-    totalTime: '21h',
-    class: 'Economy',
-    rate: '200'
-  },
-  {
-    id: 2,
-    departureDate: '2024-03-02',
-    departureAirport: 'JFK',
-    departureCity: 'New York',
-    departureTime: '09:00',
-    arrivalAirport: 'CDG',
-    arrivalCity: 'Paris',
-    arrivalTime: '21:00',
-    flightType: 'Boeing 777',
-    totalTime: '12h',
-    class: 'Business',
-    rate: '1200'
-  },
-  {
-    id: 3,
-    departureDate: '2024-03-03',
-    departureAirport: 'SFO',
-    departureCity: 'San Francisco',
-    departureTime: '11:00',
-    arrivalAirport: 'NRT',
-    arrivalCity: 'Tokyo',
-    arrivalTime: '15:00',
-    flightType: 'Boeing 787 Dreamliner',
-    totalTime: '14h',
-    class: 'First Class',
-    rate: '2500'
-  },
-  {
-    id: 4,
-    departureDate: '2024-03-04',
-    departureAirport: 'LHR',
-    departureCity: 'London',
-    departureTime: '14:00',
-    arrivalAirport: 'DXB',
-    arrivalCity: 'Dubai',
-    arrivalTime: '00:00',
-    flightType: 'Airbus A380',
-    totalTime: '10h',
-    class: 'Economy',
-    rate: '700'
-  },
-  {
-    id: 5,
-    departureDate: '2024-03-05',
-    departureAirport: 'SYD',
-    departureCity: 'Sydney',
-    departureTime: '16:00',
-    arrivalAirport: 'SIN',
-    arrivalCity: 'Singapore',
-    arrivalTime: '22:00',
-    flightType: 'Airbus A350',
-    totalTime: '8h',
-    class: 'Business',
-    rate: '1100'
-  },
-  {
-    id: 6,
-    departureDate: '2024-03-06',
-    departureAirport: 'DEL',
-    departureCity: 'Delhi',
-    departureTime: '18:00',
-    arrivalAirport: 'YYZ',
-    arrivalCity: 'Toronto',
-    arrivalTime: '08:00',
-    flightType: 'Boeing 747',
-    totalTime: '14h',
-    class: 'Economy',
-    rate: '900'
-  }
-];
+
+    useEffect(() => {
+      const fetchFlights = async (e) => {
+        const res = await axios.get(
+          "http://localhost:4451/api/flight/getbyRoute", {
+            params: {
+              start: departure,
+              end: destination,
+            },
+          }
+        );
+        setFlights(res.data);
+      };
+  
+      fetchFlights();
+    }, []);
+
+
+//     const flightsData = [
+//   {
+//     id: 1,
+//     departureDate: '2024-03-01',
+//     departureAirport: 'BLR',
+//     departureCity: 'Bengaluru',
+//     departureTime: '13:00',
+//     arrivalAirport: 'LAX',
+//     arrivalCity: 'Los Angeles',
+//     arrivalTime: '11:00',
+//     flightType: 'Airbus A320',
+//     totalTime: '21h',
+//     class: 'Economy',
+//     rate: '200'
+//   },
+//   {
+//     id: 2,
+//     departureDate: '2024-03-02',
+//     departureAirport: 'JFK',
+//     departureCity: 'New York',
+//     departureTime: '09:00',
+//     arrivalAirport: 'CDG',
+//     arrivalCity: 'Paris',
+//     arrivalTime: '21:00',
+//     flightType: 'Boeing 777',
+//     totalTime: '12h',
+//     class: 'Business',
+//     rate: '1200'
+//   },
+//   {
+//     id: 3,
+//     departureDate: '2024-03-03',
+//     departureAirport: 'SFO',
+//     departureCity: 'San Francisco',
+//     departureTime: '11:00',
+//     arrivalAirport: 'NRT',
+//     arrivalCity: 'Tokyo',
+//     arrivalTime: '15:00',
+//     flightType: 'Boeing 787 Dreamliner',
+//     totalTime: '14h',
+//     class: 'First Class',
+//     rate: '2500'
+//   },
+//   {
+//     id: 4,
+//     departureDate: '2024-03-04',
+//     departureAirport: 'LHR',
+//     departureCity: 'London',
+//     departureTime: '14:00',
+//     arrivalAirport: 'DXB',
+//     arrivalCity: 'Dubai',
+//     arrivalTime: '00:00',
+//     flightType: 'Airbus A380',
+//     totalTime: '10h',
+//     class: 'Economy',
+//     rate: '700'
+//   },
+//   {
+//     id: 5,
+//     departureDate: '2024-03-05',
+//     departureAirport: 'SYD',
+//     departureCity: 'Sydney',
+//     departureTime: '16:00',
+//     arrivalAirport: 'SIN',
+//     arrivalCity: 'Singapore',
+//     arrivalTime: '22:00',
+//     flightType: 'Airbus A350',
+//     totalTime: '8h',
+//     class: 'Business',
+//     rate: '1100'
+//   },
+//   {
+//     id: 6,
+//     departureDate: '2024-03-06',
+//     departureAirport: 'DEL',
+//     departureCity: 'Delhi',
+//     departureTime: '18:00',
+//     arrivalAirport: 'YYZ',
+//     arrivalCity: 'Toronto',
+//     arrivalTime: '08:00',
+//     flightType: 'Boeing 747',
+//     totalTime: '14h',
+//     class: 'Economy',
+//     rate: '900'
+//   }
+// ];
 
       
-setFlights(flightsData);
-  }, []);
+// setFlights(flightsData);
+
 
   const handleSort = (sortKey) => {
     let sortedFlights = [...flights];
@@ -129,14 +154,14 @@ return (
   <div className="bg-[#eeeeee] text-black min-h-screen pt-20 animate-float" style={{ fontFamily: "Anta" }}>
   <div className="p-4 flex justify-between items-center bg-white mx-auto" style={{ maxWidth: '80%' }}>
         <div>
-          {flights.length > 0 && (
+          {
             <div className="flex items-center space-x-3">
               <div className="text-lg font-semibold">
-                {flights[0].departureCity} to {flights[0].arrivalCity}
+                {searchParams.departure} to {searchParams.destination}
               </div>
             
             </div>
-          )}
+          }
         </div>
         <p>{flights.length} Flights Found For Your Trip</p>
         <button
@@ -180,7 +205,7 @@ return (
     )}
     <div>
       {flights.map(flight => (
-        <FlightCard key={flight.id} flight={flight} className="animate-float" />
+        <FlightCard key={flight.aeroplaneID} flight={flight} className="animate-float" />
       ))}
     </div>
   </div>

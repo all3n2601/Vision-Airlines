@@ -19,8 +19,12 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import black_white from "../../assets/images/logo-png-back.png";
 const items = [img1, img2, img3];
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const [airport, setAirports] = useState([]);
+
   const [searchParams, setSearchParams] = useState({
     departure: "",
     destination: "",
@@ -29,6 +33,8 @@ function Home() {
     adults: 1,
     children: 0,
   });
+
+  const navigate = useNavigate();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const goToPreviousImage = () => {
@@ -46,11 +52,35 @@ function Home() {
     setSearchParams((prevParams) => ({ ...prevParams, [name]: value }));
   };
 
+  const areRequiredFieldsFilled = () => {
+    return (
+      searchParams.departure &&
+      searchParams.destination &&
+      searchParams.class &&
+      searchParams.departureDate
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchParams);
-    // Implement your submission logic here
+    if (areRequiredFieldsFilled()) {
+      navigate("/search-flights", {
+        state: { searchParams },
+      });
+    }
   };
+
+
+  useEffect(() => {
+    const fetchAirports = async (e) => {
+      const res = await axios.get(
+        "http://localhost:4451/api/airport/getAirport"
+      );
+      setAirports(res.data);
+    };
+
+    fetchAirports();
+  }, []);
 
   const [showExtendedContent, setShowExtendedContent] = useState(false);
   const formRef = useRef(null);
@@ -66,6 +96,7 @@ function Home() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [formRef]);
+
   const cardData = [
     { cityName: "London", country: "UK", price: "23,999", imageSrc: c1 },
     {
@@ -104,28 +135,43 @@ function Home() {
           <div ref={formRef}>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex space-x-4">
-                <input
-                  type="text"
+                <select
                   id="departure"
                   name="departure"
                   value={searchParams.departure}
                   onChange={handleInputChange}
                   onFocus={() => setShowExtendedContent(true)}
-                  placeholder="Departure"
-                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17]"
-                  style={{ fontFamily: "Anta" }}
-                />
-                <input
-                  type="text"
+                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md"
+                >
+                  <option value="" disabled>
+                    Select Departure
+                  </option>
+                  {airport.map((airport, index) => (
+                    <option
+                      key={airport.airportID}
+                      value={airport.airportID}
+                    >
+                      {airport.airportName}
+                    </option>
+                  ))}
+                </select>
+                <select
                   id="destination"
                   name="destination"
                   value={searchParams.destination}
                   onChange={handleInputChange}
-                  onFocus={() => setShowExtendedContent(true)} 
-                  placeholder="Destination"
-                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md placeholder-[#070e17]"
-                  style={{ fontFamily: "Anta" }}
-                />
+                  onFocus={() => setShowExtendedContent(true)}
+                  className="flex-1 mx-2 p-2 bg-[#f8f8f886] border-2 border-[#0000007b] text-[#070e17] rounded-md"
+                >
+                  <option value="" disabled>
+                    Select Destination
+                  </option>
+                  {airport.map((airport, index) => (
+                    <option key={airport.airportID} value={airport.airportID}>
+                      {airport.airportName}
+                    </option>
+                  ))}
+                </select>
               </div>
               {showExtendedContent && (
                 <>
@@ -271,30 +317,56 @@ function Home() {
           ))}
         </div>
       </section>
-      <section className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, #a2bcd9, #ffffff)' }}>
-                <div className="relative flex flex-col items-start justify-center mt-1 ">
-                    <h2 className="text-black text-lg lg:text-xl font-bold tracking-wide m-4 " style={{ fontFamily: "Anta" }}>
-                        Travel with Vision Airline's..
-                    </h2>
-    <div className="w-full max-w-5xl p-4 shadow-xl overflow-hidden " style={{
-        borderRadius: '20px',
-        backgroundColor: '#e0e1e8',
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
-    }}>
-        <div className="flex items-center justify-between relative p-4">
-            <button onClick={goToPreviousImage} className="absolute left-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12">
-                <img src={leftArrow} alt="Previous" className="w-full h-full object-contain" />
-            </button>
-            <img src={items[currentImageIndex]} alt="Gallery" className="object-cover rounded-lg" style={{ height: '500px', width: '100%' }} />
-            <button onClick={goToNextImage} className="absolute right-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12">
-                <img src={rightArrow} alt="Next" className="w-full h-full object-contain" />
-            </button>
+      <section
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "linear-gradient(to bottom, #a2bcd9, #ffffff)" }}
+      >
+        <div className="relative flex flex-col items-start justify-center mt-1 ">
+          <h2
+            className="text-black text-lg lg:text-xl font-bold tracking-wide m-4 "
+            style={{ fontFamily: "Anta" }}
+          >
+            Travel with Vision Airline's..
+          </h2>
+          <div
+            className="w-full max-w-5xl p-4 shadow-xl overflow-hidden "
+            style={{
+              borderRadius: "20px",
+              backgroundColor: "#e0e1e8",
+              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <div className="flex items-center justify-between relative p-4">
+              <button
+                onClick={goToPreviousImage}
+                className="absolute left-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12"
+              >
+                <img
+                  src={leftArrow}
+                  alt="Previous"
+                  className="w-full h-full object-contain"
+                />
+              </button>
+              <img
+                src={items[currentImageIndex]}
+                alt="Gallery"
+                className="object-cover rounded-lg"
+                style={{ height: "500px", width: "100%" }}
+              />
+              <button
+                onClick={goToNextImage}
+                className="absolute right-0 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-300 transition duration-150 ease-in-out w-12 h-12"
+              >
+                <img
+                  src={rightArrow}
+                  alt="Next"
+                  className="w-full h-full object-contain"
+                />
+              </button>
+            </div>
+          </div>
         </div>
-        
-    </div>
-  </div>
-</section>
-
+      </section>
 
       {/* </div> */}
     </>

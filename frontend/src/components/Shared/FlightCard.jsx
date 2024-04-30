@@ -12,6 +12,49 @@ const FlightCard = ({ flight }) => {
     navigate('/passenger-detail')
   }
 
+  const classPricing = {
+    "Economy": 3000, // Base price for Economy class
+    "Business-Class": 8000, // Higher price for Business class
+    "First-Class": 15000, // Premium price for First class
+  };
+  
+  // Function to assign a price based on the class of flight
+  function getPriceByClass(flightClass) {
+    return classPricing[flightClass] || 0; // Default to 0 if class not found
+  }
+
+  function calculateTotalTime(startTime, endTime) {
+   
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+  
+    // Convert start and end times to minutes past midnight
+    const startInMinutes = startHour * 60 + startMinute;
+    const endInMinutes = endHour * 60 + endMinute;
+  
+    // Calculate the difference in minutes
+    let durationInMinutes = endInMinutes - startInMinutes;
+  
+    // Handle cases where the end time is on the next day (overnight flights)
+    if (durationInMinutes < 0) {
+      durationInMinutes += 24 * 60; // Add 24 hours in minutes
+    }
+  
+    // Convert the total minutes into hours and minutes
+    const durationHours = Math.floor(durationInMinutes / 60);
+    const durationMinutes = durationInMinutes % 60;
+  
+    return { hours: durationHours, minutes: durationMinutes };
+  }
+  
+  // Example usage
+  const startTime = flight.startTime;
+  const endTime = flight.endTime;
+  const price = getPriceByClass(flight.classs);
+  
+  const { hours, minutes } = calculateTotalTime(startTime, endTime);
+  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (detailsRef.current && !detailsRef.current.contains(event.target)) {
@@ -31,9 +74,9 @@ const FlightCard = ({ flight }) => {
             <div className="flex items-center">
               
               <div className="flex flex-col">
-                <span>{flight.departureAirport}</span>
-                <span className="text-sm">{flight.departureCity}</span>
-                <span className="text-sm">{flight.departureTime}</span>
+                <span>{flight.startDestination}</span>
+                <span className="text-sm">{flight.startDestination}</span>
+                <span className="text-sm">{flight.startTime}</span>
               </div>
               <FaPlaneDeparture className="text-blue-500 mr-2" />
             </div>
@@ -47,20 +90,20 @@ const FlightCard = ({ flight }) => {
             <FaPlaneArrival className="text-green-500 ml-2" />
               <div className="flex flex-col text-right">
                 <span>{flight.arrivalAirport}</span>
-                <span className="text-sm">{flight.arrivalCity}</span>
-                <span className="text-sm">{flight.arrivalTime}</span>
+                <span className="text-sm">{flight.endDestination}</span>
+                <span className="text-sm">{flight.endTime}</span>
               </div>
               
             </div>
           </div>
           <div className="text-center my-2">
-            <span>{flight.flightType}</span>
-            <p>Total time: {flight.totalTime}</p>
+            <span>{flight.aeroplaneName}</span>
+            <p>Total time: {hours + ':'+ minutes}</p>
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <p className="text-lg hover:text-blue-500">{flight.class}</p>
-          <p className="text-lg hover:text-blue-500" style={{ fontFamily: "anta" }}>₹{flight.rate}</p>
+          <p className="text-lg hover:text-blue-500">{flight.classs}</p>
+          <p className="text-lg hover:text-blue-500" style={{ fontFamily: "anta" }}>₹{price}</p>
           <FaCaretDown className="text-gray-400 hover:text-black mt-2" onClick={() => setShowDetails(!showDetails)} />
         </div>
       </div>

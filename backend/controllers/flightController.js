@@ -95,4 +95,22 @@ const getFlight = asyncHandler(async (req, res) => {
   res.status(200).json(Flight);
 });
 
-module.exports = { createFlight, deleteFlight, getFlight, updateFlight };
+const getFlightsByRoute = asyncHandler(async (req, res) => {
+  const { start, end } = req.query; 
+
+  if (!start || !end) {
+    res.status(400);
+    throw new Error("Both start and end destinations are required");
+  }
+
+  const flights = await flight.find({
+    startDestination: start,
+    endDestination: end,
+  });
+  
+  res.status(200).json(flights);
+});
+
+module.exports = { getFlightsByRoute };
+
+module.exports = { createFlight, deleteFlight, getFlight, updateFlight, getFlightsByRoute };
