@@ -44,4 +44,14 @@ const getAirport = asyncHandler(async (req, res) => {
   res.status(200).json(Airport);
 });
 
-module.exports = { createAirport, deleteAirport, getAirport };
+const getAirportName = asyncHandler(async (req, res) => {
+  const { airportID } = req.query;
+  const airportName = await airport.find({ airportID });
+  if (!airportName) {
+    res.status(404);
+    throw new Error("Airport not found");
+  }
+  res.status(200).json({ message: airportName });
+});
+
+module.exports = { createAirport, deleteAirport, getAirport, getAirportName };
