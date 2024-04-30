@@ -51,11 +51,11 @@ const createFlight = asyncHandler(async (req, res) => {
   });
 
   if (newFlight) {
-    res.status(201)({
+    res.status(201).json({
       aeroplaneID: aeroplaneID,
+      message: "New Flight created",
     });
   }
-  res.status(200).json({ message: "New Flight created" });
 });
 
 const deleteFlight = asyncHandler(async (req, res) => {
@@ -87,12 +87,12 @@ const updateFlight = asyncHandler(async (req, res) => {
 });
 
 const getFlight = asyncHandler(async (req, res) => {
-  const Flight = await flight.findById(req.params.id);
+  const Flight = await flight.find();
   if (!Flight) {
     res.status(404);
-    throw new Error("Employee not found");
+    throw new Error("Flight not found");
   }
-  res.status(200);
+  res.status(200).json(Flight);
 });
 
 module.exports = { createFlight, deleteFlight, getFlight, updateFlight };

@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Components from "./styledComponents";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Signin = () => {
   const [signIn, toggle] = React.useState(true);
 
   const [data, setData] = React.useState({
-    email: "",
-    password: "",
+    passengerEmail: "",
+    passengerPassword: "",
   });
 
   const navigate = useNavigate();
@@ -17,35 +19,37 @@ const Signin = () => {
 
   const [isPassVisible, setIsPassVisible] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const SignInhandleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginProgress());
+    //dispatch(loginProgress());
     axios
-      .post("https://hmsmern.onrender.com/auth/login", data)
+      .post("http://localhost:4451/api/passenger/login", data)
       .then((res) => {
-        if (res.data.role === "patient") {
-          const user = res.data.user;
-          //   dispatch(login(user));
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user", JSON.stringify(user));
-          navigate("/user-profile");
+        if (res.data.message === "Success") {
+          // const user = res.data.user;
+          // //   dispatch(login(user));
+          // localStorage.setItem("token", res.data.token);
+          // localStorage.setItem("user", JSON.stringify(user));
+          navigate("/");
           //   dispatch(loginSuccess());
-        } else if (res.data.role === "admin") {
-          const user = res.data.user;
-          //   dispatch(login(user));
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user", JSON.stringify(user));
-          navigate("/admin-dashboard");
-          //   dispatch(loginSuccess());
-        } else if (res.data.role === "doctor" || res.data.role === "nurse") {
-          //   dispatch(loginFailure());
-          Swal.fire({
-            title: "Invalid Role!",
-            icon: "error",
-            confirmButtonText: "Ok",
-            text: "Login Through Your Respective Page!",
-          });
-        } else {
+        }
+        // else if (res.data.role === "admin") {
+        //   const user = res.data.user;
+        //   //   dispatch(login(user));
+        //   localStorage.setItem("token", res.data.token);
+        //   localStorage.setItem("user", JSON.stringify(user));
+        //   navigate("/admin-dashboard");
+        //   //   dispatch(loginSuccess());
+        // } else if (res.data.role === "employee") {
+        //   //   dispatch(loginFailure());
+        //   Swal.fire({
+        //     title: "Invalid Role!",
+        //     icon: "error",
+        //     confirmButtonText: "Ok",
+        //     text: "Login Through Your Respective Page!",
+        //   });
+        // }
+        else {
           //   dispatch(loginFailure());
           Swal.fire({
             title: "Invalid Access!",
@@ -66,6 +70,25 @@ const Signin = () => {
       });
   };
 
+  const SignUphandleSubmit = async (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4451/api/passenger/register", data)
+      .then((res) => {
+        if (res.data.message === "Success") {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "Error",
+          icon: "error",
+          text: err,
+          button: "Ok",
+        });
+      });
+  };
+
   const handleVisible = () => {
     setIsPassVisible(!isPassVisible);
   };
@@ -78,21 +101,49 @@ const Signin = () => {
             <Components.Form>
               <Components.Title>Create Account</Components.Title>
               <Components.Input type="text" placeholder="Name" />
-              <Components.Input type="email" placeholder="Email" />
-              <Components.Input type="password" placeholder="Password" />
-              <Components.Button>Sign Up</Components.Button>
+              <Components.Input
+                onChange={(e) =>
+                  setData({ ...data, passengerEmail: e.target.value })
+                }
+                type="email"
+                placeholder="Email"
+              />
+              <Components.Input
+                onChange={(e) =>
+                  setData({ ...data, passengerPassword: e.target.value })
+                }
+                type="password"
+                placeholder="Password"
+              />
+              <Components.Button onClick={SignUphandleSubmit}>
+                Sign Up
+              </Components.Button>
             </Components.Form>
           </Components.SignUpContainer>
 
           <Components.SignInContainer signinIn={signIn}>
             <Components.Form>
               <Components.Title>Sign in</Components.Title>
-              <Components.Input type="email" placeholder="Email" />
-              <Components.Input type="password" placeholder="Password" />
+              <Components.Input
+                onChange={(e) =>
+                  setData({ ...data, passengerEmail: e.target.value })
+                }
+                type="email"
+                placeholder="Email"
+              />
+              <Components.Input
+                onChange={(e) =>
+                  setData({ ...data, passengerPassword: e.target.value })
+                }
+                type="password"
+                placeholder="Password"
+              />
               <Components.Anchor href="#">
                 Forgot your password?
               </Components.Anchor>
-              <Components.Button>Sign In</Components.Button>
+              <Components.Button onClick={SignInhandleSubmit}>
+                Sign In
+              </Components.Button>
             </Components.Form>
           </Components.SignInContainer>
 

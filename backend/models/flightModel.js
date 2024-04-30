@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const aeroplane = new Schema({
+const flight = new Schema({
   aeroplaneID: { type: String, required: true },
   aeroplaneName: { type: String, required: true },
   totalSeats: { type: Number, required: true },
@@ -32,4 +32,5 @@ const aeroplane = new Schema({
   },
 });
 
-module.exports = mongoose.model("aeroplane", aeroplane, "Flights");
+const Flight = mongoose.model("Flight", flight, "flights");
+module.exports = Flight;
