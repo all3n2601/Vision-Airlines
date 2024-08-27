@@ -1,9 +1,9 @@
 
-# Airplane Management System ✈️
+# Vision Airplane Management System ✈️
 
 ## Overview
 
-Welcome to the Airplane Management System! This application is built using the MERN Stack, Vite, Redux, and Framer Motion to deliver a seamless and responsive experience for managing flight bookings. Users can effortlessly search for flights, book tickets, and download them for their travels.
+Welcome to the Vision Airlines! This application is built using the MERN Stack, Vite, Redux, and Framer Motion to deliver a seamless and responsive experience for managing flight bookings. Users can effortlessly search for flights, book tickets, and download them for their travels.
 
 ## Features
 
